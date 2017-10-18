@@ -9,8 +9,6 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * GKislin
  * 31.05.2015.
