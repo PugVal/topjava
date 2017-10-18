@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * GKislin
@@ -30,7 +31,24 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
-        List<UserMealWithExceed> myResultList  = new ArrayList<>();
+        List<UserMealWithExceed> myResultList = new ArrayList<>();
+        Map<LocalDate, Integer> calDay = new HashMap<>();
+
+        mealList.stream()
+                .map(elt -> calDay.put(elt.getDateTime().toLocalDate(), calDay.merge(elt.getDateTime().toLocalDate(), elt.getCalories(), Integer::sum)))
+                .collect(Collectors.toList());
+
+        mealList.stream()
+                .filter(s -> TimeUtil.isBetween(s.getDateTime().toLocalTime(), startTime, endTime))
+                .map(elt -> myResultList.add(new UserMealWithExceed(elt.getDateTime(), elt.getDescription(), elt.getCalories(), calDay.get(elt.getDateTime().toLocalDate()) > caloriesPerDay)))
+                .collect(Collectors.toList());
+
+        return myResultList;
+    }
+
+    public static List<UserMealWithExceed> getFilteredWithExceededByCycle(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
+        List<UserMealWithExceed> myResultList = new ArrayList<>();
         Map<LocalDate, Integer> calDay = new HashMap<>();
 
         for (UserMeal meal : mealList)
@@ -39,12 +57,11 @@ public class UserMealsUtil {
         }
 
         for (UserMeal userMeal : mealList) {
-            if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime)) {
-
+            if (TimeUtil.isBetween(userMeal.getDateTime().toLocalTime(), startTime, endTime))
+            {
                 myResultList.add(new UserMealWithExceed(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), calDay.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay));
             }
         }
-
         return myResultList;
     }
 }
