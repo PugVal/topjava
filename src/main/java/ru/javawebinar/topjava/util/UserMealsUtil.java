@@ -8,12 +8,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-/**
- * GKislin
- * 31.05.2015.
- */
 public class UserMealsUtil {
     public static void main(String[] args) {
         List<UserMeal> mealList = Arrays.asList(
@@ -24,12 +21,14 @@ public class UserMealsUtil {
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500),
                 new UserMeal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
-        getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        getFilteredWithExceeded(mealList, LocalTime.of(2, 0), LocalTime.of(12, 0), 2000);
 //        .toLocalDate();
 //        .toLocalTime();
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
+        long t0 = System.nanoTime();
 
         List<UserMealWithExceed> myResultList = new ArrayList<>();
         Map<LocalDate, Integer> calDay = new HashMap<>();
@@ -43,10 +42,16 @@ public class UserMealsUtil {
                 .map(elt -> myResultList.add(new UserMealWithExceed(elt.getDateTime(), elt.getDescription(), elt.getCalories(), calDay.get(elt.getDateTime().toLocalDate()) > caloriesPerDay)))
                 .collect(Collectors.toList());
 
+        long t1 = System.nanoTime();
+        long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+        System.out.println(String.format("stream method took: %d ms", millis));
+
         return myResultList;
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceededByCycle(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
+        long t0 = System.nanoTime();
 
         List<UserMealWithExceed> myResultList = new ArrayList<>();
         Map<LocalDate, Integer> calDay = new HashMap<>();
@@ -62,6 +67,11 @@ public class UserMealsUtil {
                 myResultList.add(new UserMealWithExceed(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), calDay.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay));
             }
         }
+
+        long t1 = System.nanoTime();
+        long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
+        System.out.println(String.format("forEach method took: %d ms", millis));
+
         return myResultList;
     }
 }
