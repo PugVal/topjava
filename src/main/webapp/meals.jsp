@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ru.javawebinar.topjava.util.TimeUtil" %><%--
   Created by IntelliJ IDEA.
   User: User
   Date: 09.11.2017
@@ -64,25 +64,30 @@ body
 
     <c:if test="${mealsWithExceeded.size()>0}">
     <c:forEach items="${mealsWithExceeded}" var="mealWithExceed">
+        <jsp:useBean id="mealWithExceed" scope="page" type="ru.javawebinar.topjava.model.MealWithExceed"/>
 
-        <c:if test="${mealWithExceed.isExceed()}">
+        <c:if test="${mealWithExceed.exceed}">
             <tr bgcolor=red>
-                <td>${mealWithExceed.getId()}</td>
-                <td>${mealWithExceed.getDateTime()}</td>
-                <td>${mealWithExceed.getDescription()}</td>
-                <td>${mealWithExceed.getCalories()}</td>
-                <td>${mealWithExceed.isExceed()}</td>
+                <td>${mealWithExceed.id}</td>
+                <td>
+                    <%=TimeUtil.DateToString(mealWithExceed.getDateTime())%>
+                </td>
+                <td>${mealWithExceed.description}</td>
+                <td>${mealWithExceed.calories}</td>
+                <td>${mealWithExceed.exceed}</td>
 
             </tr>
         </c:if>
 
         <c:if test="${!mealWithExceed.isExceed()}">
             <tr bgcolor=green>
-                <td>${mealWithExceed.getId()}</td>
-                <td>${mealWithExceed.getDateTime()}</td>
-                <td>${mealWithExceed.getDescription()}</td>
-                <td>${mealWithExceed.getCalories()}</td>
-                <td>${mealWithExceed.isExceed()}</td>
+                <td>${mealWithExceed.id}</td>
+                <td>
+                    <%=TimeUtil.DateToString(mealWithExceed.getDateTime())%>
+                </td>
+                <td>${mealWithExceed.description}</td>
+                <td>${mealWithExceed.calories}</td>
+                <td>${mealWithExceed.exceed}</td>
 
             </tr>
         </c:if>
