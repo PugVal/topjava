@@ -55,6 +55,7 @@ body
 <table width="100%" class="tg">
         <jsp:useBean id="mealsWithExceeded" scope="request" type="java.util.List"/>
     <tr>
+        <th width="30">ID</th>
         <th width="200">Date</th>
         <th width="90">Description</th>
         <th width="90">Calories</th>
@@ -66,6 +67,7 @@ body
 
         <c:if test="${mealWithExceed.isExceed()}">
             <tr bgcolor=red>
+                <td>${mealWithExceed.getId()}</td>
                 <td>${mealWithExceed.getDateTime()}</td>
                 <td>${mealWithExceed.getDescription()}</td>
                 <td>${mealWithExceed.getCalories()}</td>
@@ -76,6 +78,7 @@ body
 
         <c:if test="${!mealWithExceed.isExceed()}">
             <tr bgcolor=green>
+                <td>${mealWithExceed.getId()}</td>
                 <td>${mealWithExceed.getDateTime()}</td>
                 <td>${mealWithExceed.getDescription()}</td>
                 <td>${mealWithExceed.getCalories()}</td>
