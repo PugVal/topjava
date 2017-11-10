@@ -22,6 +22,10 @@ public class MealWithExceed {
         this.exceed = exceed;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {return id;}
 
     public LocalDateTime getDateTime() {

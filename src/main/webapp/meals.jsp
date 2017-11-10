@@ -60,6 +60,8 @@ body
         <th width="90">Description</th>
         <th width="90">Calories</th>
         <th width="90">Exceed</th>
+        <th width="90">Update</th>
+        <th width="90">Delete</th>
     </tr>
 
     <c:if test="${mealsWithExceeded.size()>0}">
@@ -79,7 +81,7 @@ body
             </tr>
         </c:if>
 
-        <c:if test="${!mealWithExceed.isExceed()}">
+        <c:if test="${mealWithExceed.exceed}">
             <tr bgcolor=green>
                 <td>${mealWithExceed.id}</td>
                 <td>
