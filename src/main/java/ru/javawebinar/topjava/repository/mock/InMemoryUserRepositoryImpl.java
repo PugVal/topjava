@@ -5,13 +5,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
-
-import java.util.Collections;
+import ru.javawebinar.topjava.util.UsersUtil;
 import java.util.List;
 
 @Repository
-public class MockUserRepositoryImpl implements UserRepository {
-    private static final Logger log = LoggerFactory.getLogger(MockUserRepositoryImpl.class);
+public class InMemoryUserRepositoryImpl implements UserRepository {
+    private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
+
+    public static void main(String[] args) {
+      List<User> u = new InMemoryUserRepositoryImpl().getAll();
+
+        for(User uu : u){
+
+            System.out.println(uu.getName() + " " + uu.getEmail());
+        }
+    }
 
     @Override
     public boolean delete(int id) {
@@ -34,7 +42,7 @@ public class MockUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        return Collections.emptyList();
+        return UsersUtil.orderedUsersList(UsersUtil.USERS);
     }
 
     @Override
