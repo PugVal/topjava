@@ -7,11 +7,11 @@ import java.util.*;
 
 public class UsersUtil {
     public static final  List<User> USERS = Arrays.asList(
-            new User(1, "Ivan", "van@", "123", Role.ROLE_ADMIN),
-            new User(2, "Kate", "kat@", "kkk", Role.ROLE_USER),
-            new User(3, "Alex", "al@", "pug", Role.ROLE_ADMIN),
-            new User(5, "Val", "zalval@", "vvvv", Role.ROLE_USER),
-            new User(4, "Val", "valval@", "vvvv", Role.ROLE_USER)
+            new User( "Ivan", "van@", "123", Role.ROLE_ADMIN),
+            new User( "Kate", "kat@", "kkk", Role.ROLE_USER),
+            new User( "Alex", "al@", "pug", Role.ROLE_ADMIN),
+            new User( "Val", "zalval@", "vvvv", Role.ROLE_USER),
+            new User( "Val", "valval@", "vvvv", Role.ROLE_USER)
 
     );
 
