@@ -3,11 +3,13 @@ package ru.javawebinar.topjava.service;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface MealService
 {
-    Meal save(Meal meal, int userId);
+    Meal create(Meal meal, int userId);
+    void update(Meal meal, int userId);
     void delete(int id, int userId);
     Meal get(int id, int userId);
-    Collection<Meal> getAll(int userId);
+    List<Meal> getAll(int userId);
 }
