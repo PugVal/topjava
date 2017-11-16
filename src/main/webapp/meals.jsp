@@ -50,14 +50,6 @@
         </c:forEach>
     </table>
 
-    <br/>
-    <a href="meals?action=search&id">Search Meal</a>
-    <form action="searchedMeal.jsp">
-        <p><input type="text"></p>
-
-        <p><input type="submit"></p>
-    </form>
-
 
 </section>
 </body>

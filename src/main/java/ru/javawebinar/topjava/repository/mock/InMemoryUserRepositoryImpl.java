@@ -32,8 +32,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         if (user.isNew()) {
             user.setId(counter.incrementAndGet());
         }
-        repository.put(user.getId(), user);
-        return user;
+         return repository.put(user.getId(), user);
     }
 
     @Override
@@ -69,6 +68,6 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
            return UsersUtil.orderedUsersList(UsersUtil.USERS).stream().
                    filter(user -> user.getEmail().equals(email))
-                   .findFirst().get();
+                   .findFirst().orElse(null);
     }
 }
