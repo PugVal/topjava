@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
+<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>--%>
 <html>
 <head>
@@ -48,6 +49,16 @@
             </tr>
         </c:forEach>
     </table>
+
+    <br/>
+    <a href="meals?action=search&id">Search Meal</a>
+    <form action="searchedMeal.jsp">
+        <p><input type="text"></p>
+
+        <p><input type="submit"></p>
+    </form>
+
+
 </section>
 </body>
 </html>

@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,12 +27,19 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public Meal create(Meal meal, int userId) {
-        return repository.save(meal, userId);
+        if (meal.getUserId()==userId)
+        {
+            return repository.save(meal, userId);
+        }
+        return null;
     }
 
     @Override
     public void update(Meal meal, int userId) {
-        repository.save(meal, userId);
+        if (meal.getUserId()==userId)
+        {
+            repository.save(meal, userId);
+        }
     }
 
     @Override
@@ -51,9 +60,10 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<Meal> getAll(int userId) {
+    public List<Meal> getAll(int userId, LocalDate startDate, LocalDate endDate) {
         return repository.getAll(userId).stream()
                 .filter(m -> m.getUserId() == userId)
+                .filter(meal -> DateTimeUtil.isBetweenByDate(meal.getDate(), startDate, endDate))
                 .sorted(Comparator.comparing(Meal::getDateTime))
                 .collect(Collectors.toList());
     }
