@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.ValidationUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -41,6 +42,7 @@ public class MealRestController {
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);
+        ValidationUtil.checkNew(meal);
         return service.create(meal, AuthorizedUser.id());
     }
 
@@ -50,8 +52,9 @@ public class MealRestController {
          service.delete(id, AuthorizedUser.id());
      }
 
-    public void update(Meal meal) {
-        log.info("update {} with id={}", meal, meal.getId());
+    public void update(Meal meal, int id) {
+        log.info("update {} with id={}", meal, id);
+        ValidationUtil.assureIdConsistent(meal, id);
         service.update(meal, AuthorizedUser.id());
     }
 
