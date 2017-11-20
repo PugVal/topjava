@@ -19,7 +19,7 @@ import java.util.List;
 import static ru.javawebinar.topjava.UserTestData.*;
 
 @ContextConfiguration({
-        "classpath:spring/spring-app.xml",
+        "classpath:META-INF/applicationContext-web-test.xml",
         "classpath:spring/spring-db.xml"
 })
 @RunWith(SpringRunner.class)
