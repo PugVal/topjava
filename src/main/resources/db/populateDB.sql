@@ -18,3 +18,4 @@ INSERT INTO meals (user_id, description, calories) VALUES
   (100001, 'breakfast', 500),
   (100001, 'dinner', 500),
   (100001, 'supper', 500)
+
