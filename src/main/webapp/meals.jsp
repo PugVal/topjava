@@ -18,7 +18,7 @@
         </dl>
         <dl>
             <dt>To Date:</dt>
-            <dd><input type="date" name="endDate" value="${param.endDate}"></dd>
+            <dd><input type="date" name="endDate" value=<%request.getParameter("endDate");%>></dd>
         </dl>
         <dl>
             <dt>From Time:</dt>
@@ -31,6 +31,7 @@
         <button type="submit">Filter</button>
     </form>
     <hr/>
+
     <a href="meals?action=create">Add Meal</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
