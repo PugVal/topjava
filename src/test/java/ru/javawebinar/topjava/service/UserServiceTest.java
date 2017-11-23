@@ -52,10 +52,10 @@ public class UserServiceTest {
         assertMatch(service.getAll(), ADMIN, newUser, USER);
     }
 
-    /*@Test(expected = Exception.class)
+    @Test(expected = DataAccessException.class)
     public void duplicateMailCreate() throws Exception {
         service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
-    }*/
+    }
 
     @Test
     public void delete() throws Exception {
