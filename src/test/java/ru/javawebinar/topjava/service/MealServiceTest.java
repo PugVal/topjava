@@ -1,7 +1,13 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,6 +38,56 @@ public class MealServiceTest {
 
     @Autowired
     private MealService service;
+
+    private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
+
+    private static String watchedLog;
+    private static String watchedLogTime;
+    private long start;
+
+    @Rule
+    public final TestRule watchman = new TestWatcher() {
+        /*@Override
+        public Statement apply(Statement base, Description description) {
+            return super.apply(base, description);
+        }*/
+
+        @Override
+        protected void succeeded(Description description) {
+            watchedLog += description.getDisplayName() + " " + "success!\n";
+        }
+
+        @Override
+        protected void failed(Throwable e, Description description) {
+            watchedLog += description.getDisplayName() + " " + e.getClass().getSimpleName() + "\n";
+        }
+
+        @Override
+        protected void skipped(AssumptionViolatedException e, Description description) {
+            watchedLog += description.getDisplayName() + " " + e.getClass().getSimpleName() + "\n";
+        }
+
+        @Override
+        protected void starting(Description description) {
+            super.starting(description);
+             start = System.currentTimeMillis();
+        }
+
+        @Override
+        protected void finished(Description description) {
+            super.finished(description);
+            long finish = System.currentTimeMillis()-start;
+            watchedLogTime += "\n" + " ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА "  + description.getDisplayName() + " = " + finish + " ms" ;
+            //log.info(watchedLogTime);
+        }
+    };
+
+    @AfterClass
+    public static void testResults()
+    {
+        log.info(watchedLog);
+        log.info(watchedLogTime);
+    }
 
     @Test
     public void testDelete() throws Exception {
