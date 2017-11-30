@@ -41,51 +41,27 @@ public class MealServiceTest {
 
     private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
 
-    private static String watchedLog;
     private static String watchedLogTime;
     private long start;
 
     @Rule
-    public final TestRule watchman = new TestWatcher() {
-        /*@Override
-        public Statement apply(Statement base, Description description) {
-            return super.apply(base, description);
-        }*/
-
-        @Override
-        protected void succeeded(Description description) {
-            watchedLog += description.getDisplayName() + " " + "success!\n";
-        }
-
-        @Override
-        protected void failed(Throwable e, Description description) {
-            watchedLog += description.getDisplayName() + " " + e.getClass().getSimpleName() + "\n";
-        }
-
-        @Override
-        protected void skipped(AssumptionViolatedException e, Description description) {
-            watchedLog += description.getDisplayName() + " " + e.getClass().getSimpleName() + "\n";
-        }
+    public final TestWatcher watchman = new TestWatcher() {
 
         @Override
         protected void starting(Description description) {
-            super.starting(description);
              start = System.currentTimeMillis();
         }
 
         @Override
         protected void finished(Description description) {
-            super.finished(description);
             long finish = System.currentTimeMillis()-start;
             watchedLogTime += "\n" + " ВРЕМЯ ВЫПОЛНЕНИЯ ТЕСТА "  + description.getDisplayName() + " = " + finish + " ms" ;
-            //log.info(watchedLogTime);
         }
     };
 
     @AfterClass
     public static void testResults()
     {
-        log.info(watchedLog);
         log.info(watchedLogTime);
     }
 
