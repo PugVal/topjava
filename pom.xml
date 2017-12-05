@@ -202,29 +202,23 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
-            <activation>
+            <!--<activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
         </profile>
 
         <profile>
             <id>jdbc</id>
-            <dependencies>
-                <dependency>
-                    <groupId>jdbc</groupId>
-                    <artifactId>jdbc</artifactId>
-                    <version>2.0</version>
-                </dependency>
-            </dependencies>
+
         </profile>
 
         <profile>
             <id>jpa</id>
             <dependencies>
                 <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate-core</artifactId>
-                    <version>${hibernate.version}</version>
+                    <groupId>org.springframework.data</groupId>
+                    <artifactId>spring-data-jpa</artifactId>
+                    <version>${spring-data-jpa.version}</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -238,9 +232,9 @@
                     <version>${spring-data-jpa.version}</version>
                 </dependency>
             </dependencies>
-            <activation>
+            <!--<activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
         </profile>
 
     </profiles>
