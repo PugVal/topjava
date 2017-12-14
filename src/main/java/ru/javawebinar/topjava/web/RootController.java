@@ -11,7 +11,9 @@ import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
@@ -66,4 +68,20 @@ public class RootController {
         return "meals";
     }
 
+    @GetMapping("/meals/create")
+    public String createMeals(HttpServletRequest request, Model model) {
+        final Meal meal = new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
+        model.addAttribute("meal", meal);
+        return "mealForm";
+    }
+
+    @GetMapping("/meals/added")
+    public String receiveaddedMeal(HttpServletRequest request, Model model) {
+        Meal meal = new Meal(
+                LocalDateTime.parse(request.getParameter("dateTime")),
+                request.getParameter("description"),
+                Integer.parseInt(request.getParameter("calories")));
+        mealController.create(meal);
+        return "redirect:/meals";
+    }
 }
