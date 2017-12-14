@@ -12,7 +12,9 @@
 <body>
 <section>
     <h3>Meals</h3>
-    <form method="post" action="meals?action=filter">
+    <c:url var="addAction" value="/meals/filter"/>
+
+    <form action="${addAction}">
         <dl>
                 <dt>From Date:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>

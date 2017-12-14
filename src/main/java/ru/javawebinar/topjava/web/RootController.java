@@ -55,4 +55,15 @@ public class RootController {
         return "redirect:/meals";
     }
 
+    @GetMapping("/meals/filter")
+    public String filterMeals(HttpServletRequest request, Model model) {
+        LocalDate startDate = parseLocalDate(request.getParameter("startDate"));
+        LocalDate endDate = parseLocalDate(request.getParameter("endDate"));
+        LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
+        LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
+        mealController.getBetween(startDate, startTime, endDate, endTime);
+        model.addAttribute("meals", mealController.getBetween(startDate, startTime, endDate, endTime));
+        return "meals";
+    }
+
 }
