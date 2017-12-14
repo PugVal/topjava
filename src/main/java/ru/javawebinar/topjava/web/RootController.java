@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Objects;
 
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalDate;
 import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
@@ -76,12 +77,23 @@ public class RootController {
     }
 
     @GetMapping("/meals/added")
-    public String receiveaddedMeal(HttpServletRequest request, Model model) {
+    public String receiveAddedMeal(HttpServletRequest request, Model model) {
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
-        mealController.create(meal);
+        if (request.getParameter("id").isEmpty()) {
+            mealController.create(meal);
+        } else {
+            mealController.update(meal, Integer.parseInt(request.getParameter("id")));
+        }
         return "redirect:/meals";
+    }
+
+    @GetMapping("/meals/update/{id}")
+    public String updateMeals(@PathVariable("id") int id, Model model) {
+        final Meal meal =  mealController.get(id);
+        model.addAttribute("meal", meal);
+        return "mealForm";
     }
 }
