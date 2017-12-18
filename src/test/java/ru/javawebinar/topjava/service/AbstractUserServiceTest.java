@@ -38,7 +38,11 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     public void setUp() throws Exception {
        if (!environment.acceptsProfiles(Profiles.JDBC))
        {
-           jpaUtil.clear2ndLevelHibernateCache();
+           try {
+               jpaUtil.clear2ndLevelHibernateCache();
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
        }
         cacheManager.getCache("users").clear();
     }
